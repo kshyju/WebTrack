@@ -9,6 +9,7 @@ var magic = require('./webtdatams.js').DataMagic;
     var site = { siteName: 'https://www.msn.com' };
     var runId = new Date().getDate() * 10000 + new Date().getHours() * 100 + new Date().getMinutes();
 
+    
 
     page.on('request', interceptedRequest => {
         site[interceptedRequest.url] = {
