@@ -1,0 +1,21 @@
+{
+    "name": "webt",
+    "version": "1.0.0",
+    "description": "Tracking the slow network calls on your web page",
+    "main": "webt.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "web"
+    ],
+    "author": "Shyju",
+    "license": "ISC",
+    "dependencies": {
+        "async": "^2.6.0",
+        "mssql": "^4.1.0",
+        "puppeteer": "^0.13.0",
+        "tedious": "^2.1.5",
+        "tedious-connection-pool": "^1.0.5"
+    }
+}
