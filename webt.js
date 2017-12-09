@@ -11,13 +11,16 @@ var magic = require('./webtdatams.js').DataMagic;
 
     
 
-    page.on('request', interceptedRequest => {
-        site[interceptedRequest.url] = {
+    page.on('request', req => {
+        site[req.url] = {
             startTime: Date.now(),
             runId: runId,
             siteId : 2
         };
+        //console.log(req);
     });
+
+  
 
     
     page.on('requestfinished', msg => {
@@ -29,14 +32,14 @@ var magic = require('./webtdatams.js').DataMagic;
         site[msg.url].method = msg.method;
         
         var r = site[msg.url];
-
+        //console.log(r.status);
         magic.logCall(r);
 
     });
 
 
     await page.goto(site.siteName);
-
+    await page.waitFor(4000);
     await browser.close();
 
 })()
