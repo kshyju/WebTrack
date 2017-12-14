@@ -12,27 +12,35 @@ var magic = require('./webtdatams.js').DataMagic;
     
 
     page.on('request', req => {
-        site[req.url] = {
+        site[req._requestId] = {
             startTime: Date.now(),
             runId: runId,
-            siteId : 2
+            siteId : 2,
+            url:req.url
         };
-        //console.log(req);
     });
 
-  
+    page.on('requestfailed', request => {
+       
+        var r = site[request._requestId];
+        r.status= -1;  // Request failed  // my own status code 
+        var duration = Date.now() - r.startTime;
+        r.duration = duration;
+        r.method = request.method;
+
+        magic.logCall(r);
+      });
 
     
-    page.on('requestfinished', msg => {
-        site[msg.url].url = msg.url;
-        var duration = Date.now() - site[msg.url].startTime;
-        site[msg.url].duration = duration;
-        site[msg.url].resourceType = msg.resourceType;
-        site[msg.url].status = msg._response.status;
-        site[msg.url].method = msg.method;
-        
-        var r = site[msg.url];
-        //console.log(r.status);
+    page.on('requestfinished', request => {
+        var r = site[request._requestId];
+       
+        var duration = Date.now() - r.startTime;
+        r.duration = duration;
+        r.resourceType = request.resourceType;
+        r.status = request._response.status;
+        r.method = request.method;
+       
         magic.logCall(r);
 
     });
